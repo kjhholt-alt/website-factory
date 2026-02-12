@@ -10,7 +10,8 @@
       "city": "Portland",
       "state": "OR",
       "zip": "97201"
-    }
+    },
+    "hours": ["Mon - Fri: 8am - 5pm", "Sat: 9am - 2pm", "Sun: Closed"]
   },
   "theme": {
     "primaryColor": "#0369A1",

@@ -14,6 +14,7 @@ export interface BusinessInfo {
   phone: string;
   email: string;
   location: LocationInfo;
+  hours?: string[];
 }
 
 export interface ThemeConfig {

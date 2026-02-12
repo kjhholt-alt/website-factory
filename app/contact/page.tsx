@@ -96,9 +96,9 @@ export default function ContactPage() {
                     <div>
                       <p className="font-medium">Business Hours</p>
                       <div className="mt-1 space-y-1 text-sm text-muted-foreground">
-                        <p>Mon - Fri: 9am - 6pm</p>
-                        <p>Sat: 9am - 1pm</p>
-                        <p>Sun: Closed</p>
+                        {(business.hours || ["Mon - Fri: 9am - 5pm"]).map((line, i) => (
+                          <p key={i}>{line}</p>
+                        ))}
                       </div>
                     </div>
                   </div>

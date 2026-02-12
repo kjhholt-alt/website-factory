@@ -5,9 +5,9 @@
 ## Quick Status
 
 - **Project:** Website Factory
-- **Current session:** 4 of TBD
+- **Current session:** 5 of TBD
 - **Last updated:** 2026-02-12
-- **Overall health:** 🟢 On track — email notifications, auth middleware, dynamic theming, 25 routes, zero TS errors
+- **Overall health:** 🟢 On track — config swap verified (soccer + dental), all hardcoded values fixed, 25 routes, zero TS errors
 
 ---
 
@@ -66,57 +66,44 @@
 ## Last Session Summary
 
 **Date:** 2026-02-12
-**Goal:** Session 4 — Email notifications, auth middleware, dynamic theming, deployment prep
+**Goal:** Session 5 — Config swap verification, fix hardcoded values, prove template system
 
 **What got done:**
-- Email notification system (lib/email.ts + lib/email-templates.ts)
-  - Resend integration with graceful console fallback when no API key
-  - 4 email templates: registration confirmation, registration admin notify, contact confirmation, contact admin notify
-  - Branded HTML templates using config theme colors and business info
-  - Non-blocking Promise.allSettled in register and contact API routes
-- Admin auth middleware (middleware.ts)
-  - NextAuth withAuth middleware protecting /admin/* and /api/admin/* routes
-  - Redirects unauthenticated users to /admin/login
-- SessionProvider (components/Providers.tsx) wraps app in layout.tsx
-- Dynamic theme system
-  - CSS custom properties injected at runtime from config in layout.tsx
-  - globals.css uses CSS variables for gradients and theme colors
-  - Swap config/site.json → entire site color scheme changes
-- Dental practice example config (config/examples/dental-practice.json)
-  - Blue theme (#0369A1), different business, programs, testimonials, FAQ
-  - Proves the config-driven template system works for any business type
-- Vercel deployment prep (vercel.json, standalone output, unoptimized images)
-- Updated .env.example with RESEND_API_KEY and EMAIL_DOMAIN
-- Production build: 25/25 pages + middleware, zero TypeScript errors
+- Full config swap verification: swapped site.json to dental practice, verified all pages render correctly
+- Fixed hardcoded colors in email templates (#1B5E20 → config.theme.primaryColor in 4 places)
+- Fixed hardcoded business hours on contact page (now reads from config.business.hours)
+- Added `hours` field to BusinessInfo interface (optional, with fallback)
+- Added business hours to both configs (soccer: 9am-6pm, dental: 8am-5pm)
+- Built successfully with both soccer and dental configs (25/25 pages each, zero TS errors)
+- Curl-verified dental pages show correct business name, blue theme (#0369A1), dental hours
+- Comprehensive codebase audit: searched all components for remaining hardcoded values
+- Production build: 25/25 routes, zero TypeScript errors
 
 **What didn't get done (and why):**
-- Vercel deployment (user said "we wont deploy yet")
+- Visual browser testing (Chrome extension not connected — only curl/code verification)
+- Vercel deployment (not requested this session)
 - Event edit functionality (deferred)
-- Visual responsive testing (deferred to deployment)
-- Real Resend email testing (needs API key in production)
 
-**Bugs found:**
-- None — clean build, zero TS errors
+**Bugs found and fixed:**
+- Email templates had 4 hardcoded `#1B5E20` values → replaced with `config.theme.primaryColor`
+- Contact page had hardcoded business hours → now reads from `config.business.hours`
 
 **Decisions made:**
-- Resend with console fallback (no hard dependency on API key for dev)
-- NextAuth withAuth middleware (simple, built-in to next-auth)
-- Runtime CSS custom properties for theme (no build-time color injection needed)
-- Non-blocking email sends (Promise.allSettled, don't block API response)
+- Business hours as optional string array in config (backward compatible with `||` fallback)
 
 ---
 
 ## Next Session Plan
 
-**Goal:** Session 5 — Second client template to prove config swap
+**Goal:** Session 6 — Vercel deployment + production testing
 
 **What to do:**
-- Copy dental-practice.json to config/site.json and verify site fully transforms
-- Visual testing of both themes (soccer + dental) in browser
+- Deploy to Vercel with Postgres database
+- Test email notifications with real Resend API key
+- Visual browser testing (Chrome extension)
 - Mobile responsive verification
-- Fix any visual issues from config swap
-- Consider restaurant or fitness studio as third config example
-- Deploy to Vercel with Postgres
+- Test admin auth flow in production
+- Consider Stripe integration for future session
 - Test email notifications with real Resend API key
 
 ---
@@ -162,3 +149,4 @@
 | 2 | 2026-02-12 | Forms API wiring + admin data | ✅ | Forms POST to APIs, server validation, admin shows real DB data, GitHub repo created |
 | 3 | 2026-02-12 | Full admin CRUD + calendar + CSV + seed | ✅ | 25 routes, event CRUD, registration actions, CSV export, admin seed, zero TS errors |
 | 4 | 2026-02-12 | Email notifications + auth + theme + deploy prep | ✅ | Resend email system, NextAuth middleware, dynamic CSS theming, dental config example, vercel.json, 25/25 build |
+| 5 | 2026-02-12 | Config swap verification + hardcoded value fixes | ✅ | Fixed email template colors, contact page hours, verified both configs build 25/25, curl-tested dental swap |

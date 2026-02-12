@@ -56,10 +56,11 @@ export function newRegistrationNotifyEmail(data: {
   childDob: string;
   programName: string;
 }): { subject: string; html: string } {
+  const config = getConfig();
   return {
     subject: `New Registration: ${data.childName} for ${data.programName}`,
     html: baseTemplate(`
-      <h2 style="color:#1B5E20;margin-top:0;">New Registration</h2>
+      <h2 style="color:${config.theme.primaryColor};margin-top:0;">New Registration</h2>
       <div style="background:#f9fafb;border-radius:8px;padding:16px;">
         <p style="margin:4px 0;"><strong>Child:</strong> ${data.childName} (DOB: ${data.childDob})</p>
         <p style="margin:4px 0;"><strong>Parent:</strong> ${data.parentName}</p>
@@ -67,7 +68,7 @@ export function newRegistrationNotifyEmail(data: {
         <p style="margin:4px 0;"><strong>Phone:</strong> ${data.parentPhone}</p>
         <p style="margin:4px 0;"><strong>Program:</strong> ${data.programName}</p>
       </div>
-      <p style="margin-top:16px;"><a href="${process.env.NEXTAUTH_URL || "http://localhost:3000"}/admin/registrations" style="display:inline-block;background:#1B5E20;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;">View in Admin</a></p>
+      <p style="margin-top:16px;"><a href="${process.env.NEXTAUTH_URL || "http://localhost:3000"}/admin/registrations" style="display:inline-block;background:${config.theme.primaryColor};color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;">View in Admin</a></p>
     `),
   };
 }
@@ -96,10 +97,11 @@ export function newContactNotifyEmail(data: {
   phone: string | null;
   message: string;
 }): { subject: string; html: string } {
+  const config = getConfig();
   return {
     subject: `New Contact Message from ${data.name}`,
     html: baseTemplate(`
-      <h2 style="color:#1B5E20;margin-top:0;">New Contact Message</h2>
+      <h2 style="color:${config.theme.primaryColor};margin-top:0;">New Contact Message</h2>
       <div style="background:#f9fafb;border-radius:8px;padding:16px;">
         <p style="margin:4px 0;"><strong>From:</strong> ${data.name}</p>
         <p style="margin:4px 0;"><strong>Email:</strong> ${data.email}</p>
@@ -107,7 +109,7 @@ export function newContactNotifyEmail(data: {
         <p style="margin:8px 0 4px;"><strong>Message:</strong></p>
         <p style="margin:4px 0;white-space:pre-wrap;">${data.message}</p>
       </div>
-      <p style="margin-top:16px;"><a href="${process.env.NEXTAUTH_URL || "http://localhost:3000"}/admin/messages" style="display:inline-block;background:#1B5E20;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;">View in Admin</a></p>
+      <p style="margin-top:16px;"><a href="${process.env.NEXTAUTH_URL || "http://localhost:3000"}/admin/messages" style="display:inline-block;background:${config.theme.primaryColor};color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;">View in Admin</a></p>
     `),
   };
 }
