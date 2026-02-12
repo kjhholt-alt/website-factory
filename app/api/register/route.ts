@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { sendEmail } from "@/lib/email";
+import { registrationConfirmationEmail, newRegistrationNotifyEmail } from "@/lib/email-templates";
+import { getPrograms, getConfig } from "@/lib/config";
 
 export async function POST(request: Request) {
   try {
@@ -60,6 +63,22 @@ export async function POST(request: Request) {
         waiverSignedAt: waiverSigned ? new Date() : null,
       },
     });
+
+    // Send emails (non-blocking)
+    const programs = getPrograms();
+    const program = programs.find((p) => p.id === programId);
+    if (program) {
+      const confirmEmail = registrationConfirmationEmail({ parentName, childName, program });
+      const notifyEmail = newRegistrationNotifyEmail({
+        parentName, parentEmail, parentPhone, childName, childDob,
+        programName: program.name,
+      });
+
+      Promise.allSettled([
+        sendEmail({ to: parentEmail, ...confirmEmail }),
+        sendEmail({ to: getConfig().business.email, ...notifyEmail }),
+      ]).catch(() => {});
+    }
 
     return NextResponse.json({ success: true, id: registration.id });
   } catch (error) {

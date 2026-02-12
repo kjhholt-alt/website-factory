@@ -1,0 +1,141 @@
+{
+  "business": {
+    "name": "Bright Smile Dental",
+    "tagline": "Your Family's Smile is Our Priority",
+    "owner": "Dr. Sarah Chen",
+    "phone": "(555) 987-6543",
+    "email": "info@brightsmile.com",
+    "location": {
+      "address": "456 Oak Avenue",
+      "city": "Portland",
+      "state": "OR",
+      "zip": "97201"
+    }
+  },
+  "theme": {
+    "primaryColor": "#0369A1",
+    "secondaryColor": "#38BDF8",
+    "mode": "light"
+  },
+  "pages": {
+    "home": true,
+    "about": true,
+    "programs": true,
+    "schedule": true,
+    "register": true,
+    "contact": true,
+    "faq": true,
+    "gallery": false,
+    "blog": false
+  },
+  "programs": [
+    {
+      "id": "general-checkup",
+      "name": "General Checkup & Cleaning",
+      "description": "Comprehensive dental exam, professional cleaning, and oral health assessment for the whole family.",
+      "ageRange": "All ages",
+      "price": 150,
+      "priceUnit": "per visit",
+      "schedule": "Mon-Fri 8am-5pm",
+      "spotsTotal": null,
+      "featured": true
+    },
+    {
+      "id": "teeth-whitening",
+      "name": "Professional Teeth Whitening",
+      "description": "In-office whitening treatment for a brighter, more confident smile in just one visit.",
+      "ageRange": "16+",
+      "price": 350,
+      "priceUnit": "per session",
+      "schedule": "By appointment",
+      "spotsTotal": null,
+      "featured": true
+    },
+    {
+      "id": "orthodontics",
+      "name": "Orthodontic Consultation",
+      "description": "Evaluation for braces or clear aligners. Personalized treatment plan for straighter teeth.",
+      "ageRange": "8+",
+      "price": 0,
+      "priceUnit": "free consultation",
+      "schedule": "Tuesdays & Thursdays",
+      "spotsTotal": 10,
+      "featured": false
+    },
+    {
+      "id": "emergency",
+      "name": "Emergency Dental Care",
+      "description": "Same-day emergency appointments for toothaches, broken teeth, and urgent dental issues.",
+      "ageRange": "All ages",
+      "price": 200,
+      "priceUnit": "per visit",
+      "schedule": "Mon-Sat, call for availability",
+      "spotsTotal": null,
+      "featured": false
+    }
+  ],
+  "registration": {
+    "fields": ["parentName", "parentEmail", "parentPhone", "childName", "childDob", "program", "medicalInfo", "emergencyContact"],
+    "requireWaiver": true,
+    "requirePayment": false
+  },
+  "content": {
+    "heroHeadline": "A Healthier Smile Starts Here",
+    "heroSubheadline": "Comprehensive, compassionate dental care for your entire family in Portland, OR",
+    "stats": {
+      "kidsTrained": "3,000+",
+      "yearsExperience": "15",
+      "rating": "4.9"
+    },
+    "testimonials": [
+      {
+        "quote": "Dr. Chen and her team made my daughter's first dental visit a wonderful experience. She actually looks forward to going back!",
+        "name": "Jennifer P.",
+        "detail": "Patient for 3 years"
+      },
+      {
+        "quote": "The whitening treatment was incredible. I saw results immediately and the staff made me feel completely comfortable throughout.",
+        "name": "Mark T.",
+        "detail": "Whitening patient"
+      },
+      {
+        "quote": "After years of dental anxiety, I finally found a practice that puts me at ease. Professional, gentle, and always on time.",
+        "name": "Rosa M.",
+        "detail": "Patient for 5 years"
+      },
+      {
+        "quote": "Our whole family comes here. Three kids, two adults, and everyone gets amazing care. The flexible scheduling is a lifesaver.",
+        "name": "David & Amy K.",
+        "detail": "Family patients"
+      }
+    ],
+    "about": {
+      "mission": "At Bright Smile Dental, we believe everyone deserves a healthy, beautiful smile. Our mission is to provide exceptional dental care in a warm, welcoming environment where patients of all ages feel comfortable and confident.",
+      "coachBio": "Dr. Sarah Chen has over 15 years of experience in family and cosmetic dentistry. A graduate of OHSU School of Dentistry, she is passionate about preventive care and helping patients achieve their best smiles. She is known for her gentle approach, especially with anxious patients and children.",
+      "values": [
+        { "title": "Compassion", "description": "We treat every patient with kindness, empathy, and respect, ensuring a comfortable experience." },
+        { "title": "Excellence", "description": "We use the latest techniques and technology to deliver the highest quality dental care." },
+        { "title": "Prevention", "description": "We focus on education and preventive care to help you maintain a lifetime of healthy smiles." },
+        { "title": "Family", "description": "We welcome patients of all ages and treat every family member with the same dedication." }
+      ]
+    },
+    "faq": [
+      { "question": "Do you accept dental insurance?", "answer": "Yes, we accept most major dental insurance plans. Contact our office to verify your coverage before your visit." },
+      { "question": "How often should I visit the dentist?", "answer": "We recommend a checkup and cleaning every six months for most patients. Some patients may need more frequent visits based on their oral health needs." },
+      { "question": "Do you treat children?", "answer": "Absolutely! We love treating kids and recommend their first dental visit by age 1 or when their first tooth appears." },
+      { "question": "What if I have dental anxiety?", "answer": "We understand dental anxiety is common. We offer a calm, patient environment and can discuss sedation options for more comfortable treatment." },
+      { "question": "Do you offer emergency appointments?", "answer": "Yes, we reserve time each day for dental emergencies. Call us and we'll do our best to see you the same day." },
+      { "question": "What payment options do you accept?", "answer": "We accept cash, all major credit cards, and offer payment plans through CareCredit for larger treatments." },
+      { "question": "How long does a teeth whitening session take?", "answer": "Our in-office whitening takes about 60-90 minutes. You'll see results immediately after your first session." },
+      { "question": "Is teeth whitening safe?", "answer": "Yes, professional teeth whitening is completely safe when performed by a dental professional. We monitor the process carefully." },
+      { "question": "What should I do if I chip a tooth?", "answer": "Save any pieces if possible, rinse your mouth gently, and call us right away. We can usually repair chipped teeth the same day." },
+      { "question": "Do you offer payment plans?", "answer": "Yes, we offer flexible payment plans through CareCredit. Ask our front desk about financing options for any treatment." }
+    ]
+  },
+  "features": {
+    "emailNotifications": true,
+    "adminDashboard": true,
+    "calendarPublic": true,
+    "exportCsv": true
+  }
+}

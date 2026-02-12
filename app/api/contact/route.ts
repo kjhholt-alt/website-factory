@@ -1,5 +1,8 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { sendEmail } from "@/lib/email";
+import { contactConfirmationEmail, newContactNotifyEmail } from "@/lib/email-templates";
+import { getConfig } from "@/lib/config";
 
 export async function POST(request: Request) {
   try {
@@ -44,6 +47,15 @@ export async function POST(request: Request) {
         phone: phone || null,
       },
     });
+
+    // Send emails (non-blocking)
+    const confirmEmail = contactConfirmationEmail({ name });
+    const notifyEmail = newContactNotifyEmail({ name, email, phone: phone || null, message });
+
+    Promise.allSettled([
+      sendEmail({ to: email, ...confirmEmail }),
+      sendEmail({ to: getConfig().business.email, ...notifyEmail }),
+    ]).catch(() => {});
 
     return NextResponse.json({ success: true });
   } catch (error) {
