@@ -1,0 +1,141 @@
+{
+  "business": {
+    "name": "Elite Soccer Academy",
+    "tagline": "Building Champions On and Off the Field",
+    "owner": "Coach Mike",
+    "phone": "(555) 123-4567",
+    "email": "coach@elitesoccer.com",
+    "location": {
+      "address": "123 Field Drive",
+      "city": "Springfield",
+      "state": "IL",
+      "zip": "62701"
+    }
+  },
+  "theme": {
+    "primaryColor": "#1B5E20",
+    "secondaryColor": "#FFD700",
+    "mode": "light"
+  },
+  "pages": {
+    "home": true,
+    "about": true,
+    "programs": true,
+    "schedule": true,
+    "register": true,
+    "contact": true,
+    "faq": true,
+    "gallery": false,
+    "blog": false
+  },
+  "programs": [
+    {
+      "id": "summer-camp",
+      "name": "Summer Camp",
+      "description": "Full-day soccer training camp for young athletes. Focus on fundamentals, teamwork, and game strategy.",
+      "ageRange": "6-14",
+      "price": 200,
+      "priceUnit": "per week",
+      "schedule": "June - August, Mon-Fri 9am-3pm",
+      "spotsTotal": 30,
+      "featured": true
+    },
+    {
+      "id": "fall-training",
+      "name": "Fall Training Program",
+      "description": "After-school training sessions focusing on advanced skills and competitive play.",
+      "ageRange": "8-16",
+      "price": 150,
+      "priceUnit": "per month",
+      "schedule": "Sep - Nov, Tue/Thu 4pm-6pm",
+      "spotsTotal": 24,
+      "featured": true
+    },
+    {
+      "id": "private-coaching",
+      "name": "Private Coaching",
+      "description": "One-on-one sessions tailored to your child's specific needs and goals.",
+      "ageRange": "6-18",
+      "price": 75,
+      "priceUnit": "per session",
+      "schedule": "By appointment",
+      "spotsTotal": null,
+      "featured": false
+    },
+    {
+      "id": "weekend-clinics",
+      "name": "Weekend Clinics",
+      "description": "Drop-in weekend sessions for extra practice and skills work.",
+      "ageRange": "6-16",
+      "price": 30,
+      "priceUnit": "per session",
+      "schedule": "Saturdays 10am-12pm",
+      "spotsTotal": 20,
+      "featured": false
+    }
+  ],
+  "registration": {
+    "fields": ["parentName", "parentEmail", "parentPhone", "childName", "childDob", "program", "medicalInfo", "emergencyContact"],
+    "requireWaiver": true,
+    "requirePayment": false
+  },
+  "content": {
+    "heroHeadline": "Where Young Athletes Become Champions",
+    "heroSubheadline": "Professional soccer training for kids ages 6-18 in Springfield, IL",
+    "stats": {
+      "kidsTrained": "500+",
+      "yearsExperience": "10",
+      "rating": "4.9"
+    },
+    "testimonials": [
+      {
+        "quote": "My son has grown so much as a player and a person since joining Elite Soccer Academy. Coach Mike truly cares about every kid on the field.",
+        "name": "Sarah M.",
+        "detail": "Parent of Jake, age 10"
+      },
+      {
+        "quote": "The summer camp was the highlight of our daughter's year. She came home every day excited to show us what she learned.",
+        "name": "David R.",
+        "detail": "Parent of Lily, age 8"
+      },
+      {
+        "quote": "Professional coaching at an affordable price. The private sessions helped my son earn a spot on the travel team.",
+        "name": "Maria L.",
+        "detail": "Parent of Carlos, age 14"
+      },
+      {
+        "quote": "We've tried other programs in Springfield, but nothing compares. The focus on sportsmanship and teamwork sets this academy apart.",
+        "name": "Tom & Lisa K.",
+        "detail": "Parents of Emma, age 12"
+      }
+    ],
+    "about": {
+      "mission": "At Elite Soccer Academy, we believe every child deserves the chance to experience the joy of soccer. Our mission is to develop well-rounded athletes who excel on the field and in life through expert coaching, positive mentorship, and a love for the beautiful game.",
+      "coachBio": "Coach Mike has over 10 years of experience coaching youth soccer at all levels. A former collegiate player and USSF-licensed coach, he founded Elite Soccer Academy with a simple goal: make high-quality soccer training accessible to every family in Springfield. His coaching philosophy centers on building confidence, developing technical skills, and fostering a genuine love for the sport.",
+      "values": [
+        { "title": "Excellence", "description": "We push every athlete to reach their full potential through structured, progressive training." },
+        { "title": "Character", "description": "Sportsmanship, respect, and integrity are at the core of everything we do." },
+        { "title": "Community", "description": "We build a supportive environment where every family feels welcome and valued." },
+        { "title": "Fun", "description": "We believe kids play their best when they're having fun. Joy is the foundation of great soccer." }
+      ]
+    },
+    "faq": [
+      { "question": "What ages do you accept?", "answer": "We offer programs for children ages 6 through 18. Our camps and clinics are grouped by age and skill level to ensure every player gets the right level of instruction." },
+      { "question": "Do I need to bring my own equipment?", "answer": "Players should bring shin guards, cleats, and a water bottle. We provide training balls, cones, and all other equipment needed for sessions." },
+      { "question": "What is your refund policy?", "answer": "We offer a full refund if you cancel at least 7 days before the program starts. After that, we offer a 50% refund or credit toward a future session." },
+      { "question": "Are your coaches background-checked?", "answer": "Absolutely. All of our coaches undergo comprehensive background checks and are certified in first aid and CPR." },
+      { "question": "Can my child try a session before committing?", "answer": "Yes! We offer a free trial session for any of our group programs. Just contact us to schedule one." },
+      { "question": "What happens if it rains?", "answer": "We monitor weather closely. If conditions are unsafe, we move to our indoor training space or reschedule the session. Parents are notified by text and email." },
+      { "question": "How do I register my child?", "answer": "You can register online through our website by visiting the Register page, or contact us directly by phone or email and we'll walk you through it." },
+      { "question": "Do you offer sibling discounts?", "answer": "Yes! We offer a 10% discount for the second child and 15% for each additional sibling enrolled in the same program." },
+      { "question": "What skill levels do you work with?", "answer": "All levels are welcome — from beginners who have never kicked a ball to advanced players preparing for competitive travel teams." },
+      { "question": "Where are sessions held?", "answer": "Most sessions are held at our main facility at 123 Field Drive, Springfield, IL. Some weekend clinics may be held at partner facilities — we'll always communicate the location in advance." }
+    ]
+  },
+  "features": {
+    "emailNotifications": true,
+    "adminDashboard": true,
+    "calendarPublic": true,
+    "exportCsv": true
+  }
+}
