@@ -5,9 +5,9 @@
 ## Quick Status
 
 - **Project:** Website Factory
-- **Current session:** 2 of TBD
+- **Current session:** 3 of TBD
 - **Last updated:** 2026-02-12
-- **Overall health:** 🟢 On track — forms wired to APIs, admin shows real data, production build passes, zero TS errors
+- **Overall health:** 🟢 On track — full admin CRUD, calendar events, CSV export, seed script, 25 routes, zero TS errors
 
 ---
 
@@ -45,63 +45,63 @@
 
 ## What's Broken / Incomplete
 
-- Admin calendar full implementation (add/edit events)
-- Admin settings (profile update, password change)
 - Email notifications not built yet
 - No payments/Stripe integration
 - Not yet deployed to Vercel
 - Mobile responsive needs visual verification
 - Config color swap needs visual verification
-- CSV export not wired up yet
+- Event edit functionality (can create and delete, but not edit)
+- Admin auth middleware (admin pages accessible without login in dev)
 
 ---
 
 ## Last Session Summary
 
 **Date:** 2026-02-12
-**Goal:** Session 2 — Forms API integration, validation, admin data wiring
+**Goal:** Session 3 — Full admin implementation, calendar events, CSV export, seed script
 
 **What got done:**
-- Registration form wired to /api/register (async POST, loading state, error handling, field reset on success)
-- Contact form wired to /api/contact (async POST, loading state, error handling, field reset on success)
-- Server-side email validation added to both register and contact APIs
-- Server-side message length validation on contact API
-- Admin dashboard converted to server component with real DB stats (registrations, messages, events, programs)
-- Admin registrations page converted to server component showing real DB records with program name lookup
-- Admin messages page converted to server component showing real contact submissions with read/unread indicators
-- GitHub repo created (kjhholt-alt/website-factory) and code pushed
-- PROJECTS.md updated in project-docs repo with Website Factory entry
-- End-to-end API testing passed (registration creates DB record, contact saves, email validation rejects bad format, admin endpoints return real data)
-- Production build: 22/22 routes, zero TypeScript errors
+- Admin calendar page: full CRUD (add events via inline form, delete events, list upcoming/past)
+- Events show on public /schedule page (server component fetches from DB)
+- Admin registrations: status update buttons (Confirm/Cancel per row, server refresh)
+- Admin messages: mark-as-read button per message (server refresh)
+- CSV export endpoint (/api/admin/export) generates downloadable CSV
+- Export CSV button wired on registrations page
+- Admin settings: profile update (name/email) + password change with bcrypt verification
+- API endpoints: /api/admin/profile (GET/PATCH), /api/admin/password (POST)
+- Admin seed script (prisma/seed.ts) creates default admin user
+- Client components: RegistrationActions, MessageActions for interactive admin actions
+- Production build: 25/25 routes, zero TypeScript errors
+- All APIs tested end-to-end
 
 **What didn't get done (and why):**
-- Admin calendar event management (Session 3)
-- Admin settings functionality (Session 3)
 - Email notifications (Session 4)
+- Event edit functionality (can add/delete, no edit — defer to later)
+- Admin auth middleware (pages accessible without login in dev)
 - Visual responsive testing (no browser connected)
-- CSV export (Session 3)
 
 **Bugs found:**
 - None — all APIs tested and working
 
 **Decisions made:**
-- Server components for admin pages (better for data fetching, no client JS needed)
-- Simple email regex validation (sufficient for MVP)
+- Client components for admin actions (RegistrationActions, MessageActions) embedded in server pages
+- Inline form for event creation (simpler than modal)
+- bcrypt password verification for settings page
 
 ---
 
 ## Next Session Plan
 
-**Goal:** Session 3 — Admin full implementation + calendar events
+**Goal:** Session 4 — Email notifications, polish, and deployment prep
 
 **What to do:**
-- Wire admin calendar page (add/edit/delete events, show in public schedule page)
-- Wire admin settings page (profile update, password change)
-- Add CSV export for registrations
-- Wire registration status updates (confirm/cancel from admin)
-- Wire message mark-as-read from admin
-- Add admin seed script (create default admin user)
-- Test full admin workflow end-to-end
+- Add email notification on new registration (Resend or similar)
+- Add email notification on contact form submission
+- Polish mobile responsive design
+- Test config color swap visually
+- Add admin auth middleware (protect admin routes)
+- Deploy to Vercel
+- Test with production database (Postgres)
 
 ---
 
@@ -115,6 +115,9 @@
 | 2026-02-12 | shadcn/ui components | Customizable, no vendor lock-in | Material UI, Chakra |
 | 2026-02-12 | No Stripe for initial build | Launch faster, validate template system | Build payments now |
 | 2026-02-12 | Server components for admin pages | Direct DB access, less client JS, faster loads | Client components with API fetch |
+| 2026-02-12 | Client action components in server pages | Interactive buttons without full page client-side | Full client page with useEffect fetch |
+| 2026-02-12 | Inline form for event creation | Simpler UX, no modal complexity | Dialog/modal form |
+| 2026-02-12 | bcrypt for admin passwords | Industry standard, secure | Plain text (never) |
 
 ---
 
@@ -137,3 +140,4 @@
 |---|------|------|--------|-------|
 | 1 | 2026-02-12 | Template system + first client site | ✅ | 47 files, 22 routes, zero TS errors, clean build |
 | 2 | 2026-02-12 | Forms API wiring + admin data | ✅ | Forms POST to APIs, server validation, admin shows real DB data, GitHub repo created |
+| 3 | 2026-02-12 | Full admin CRUD + calendar + CSV + seed | ✅ | 25 routes, event CRUD, registration actions, CSV export, admin seed, zero TS errors |

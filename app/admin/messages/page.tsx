@@ -8,6 +8,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Mail, CheckCheck } from "lucide-react";
 import { prisma } from "@/lib/db";
+import { MessageActions } from "@/components/admin/MessageActions";
 
 export default async function AdminMessagesPage() {
   const messages = await prisma.contactSubmission.findMany({
@@ -96,9 +97,15 @@ export default async function AdminMessagesPage() {
                           : msg.message}
                       </p>
                     </div>
-                    <p className="text-xs text-muted-foreground ml-4 shrink-0">
-                      {new Date(msg.createdAt).toLocaleDateString()}
-                    </p>
+                    <div className="flex flex-col items-end gap-2 ml-4 shrink-0">
+                      <p className="text-xs text-muted-foreground">
+                        {new Date(msg.createdAt).toLocaleDateString()}
+                      </p>
+                      <MessageActions
+                        messageId={msg.id}
+                        isRead={msg.read}
+                      />
+                    </div>
                   </div>
                 </div>
               ))

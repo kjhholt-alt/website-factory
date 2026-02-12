@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Download, Users } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { getPrograms } from "@/lib/config";
+import { RegistrationActions } from "@/components/admin/RegistrationActions";
 
 export default async function AdminRegistrationsPage() {
   const registrations = await prisma.registration.findMany({
@@ -42,9 +43,11 @@ export default async function AdminRegistrationsPage() {
             View and manage all program registrations.
           </p>
         </div>
-        <Button variant="outline" className="gap-2">
-          <Download className="h-4 w-4" />
-          Export CSV
+        <Button variant="outline" className="gap-2" asChild>
+          <a href="/api/admin/export" download>
+            <Download className="h-4 w-4" />
+            Export CSV
+          </a>
         </Button>
       </div>
 
@@ -72,12 +75,15 @@ export default async function AdminRegistrationsPage() {
                   <th className="text-left py-3 px-4 font-medium text-muted-foreground">
                     Date
                   </th>
+                  <th className="text-left py-3 px-4 font-medium text-muted-foreground">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {registrations.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="py-12 text-center">
+                    <td colSpan={6} className="py-12 text-center">
                       <div className="flex flex-col items-center gap-3">
                         <Users className="h-10 w-10 text-muted-foreground/50" />
                         <div>
@@ -120,6 +126,12 @@ export default async function AdminRegistrationsPage() {
                       </td>
                       <td className="py-3 px-4 text-muted-foreground">
                         {new Date(reg.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="py-3 px-4">
+                        <RegistrationActions
+                          registrationId={reg.id}
+                          currentStatus={reg.status}
+                        />
                       </td>
                     </tr>
                   ))
