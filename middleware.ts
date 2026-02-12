@@ -13,6 +13,7 @@ export const config = {
     "/admin/calendar/:path*",
     "/admin/messages/:path*",
     "/admin/settings/:path*",
+    "/admin/agents/:path*",
     "/api/admin/:path*",
   ],
 };

@@ -11,6 +11,7 @@ import {
   Mail,
   Settings,
   LogOut,
+  Bot,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
@@ -21,6 +22,7 @@ const navItems = [
   { label: "Registrations", href: "/admin/registrations", icon: Users },
   { label: "Calendar", href: "/admin/calendar", icon: CalendarDays },
   { label: "Messages", href: "/admin/messages", icon: Mail },
+  { label: "Agents", href: "/admin/agents", icon: Bot },
   { label: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
