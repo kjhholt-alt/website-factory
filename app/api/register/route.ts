@@ -37,6 +37,14 @@ export async function POST(request: Request) {
       );
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(parentEmail)) {
+      return NextResponse.json(
+        { error: "Invalid email format", field: "parentEmail" },
+        { status: 400 }
+      );
+    }
+
     const registration = await prisma.registration.create({
       data: {
         parentName,

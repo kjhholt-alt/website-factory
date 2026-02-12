@@ -21,6 +21,21 @@ export async function POST(request: Request) {
       );
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: "Invalid email format", field: "email" },
+        { status: 400 }
+      );
+    }
+
+    if (message.length < 10) {
+      return NextResponse.json(
+        { error: "Message must be at least 10 characters", field: "message" },
+        { status: 400 }
+      );
+    }
+
     await prisma.contactSubmission.create({
       data: {
         name,

@@ -49,11 +49,14 @@ export default function RegistrationForm({
 
   // Status
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const selectedProgram = programs.find((p) => p.id === selectedProgramId);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setErrorMessage("");
 
     if (
       !parentName.trim() ||
@@ -66,31 +69,59 @@ export default function RegistrationForm({
       !emergencyPhone.trim()
     ) {
       setStatus("error");
+      setErrorMessage("Please fill out all required fields before submitting.");
       return;
     }
 
     if (requireWaiver && !waiverAccepted) {
       setStatus("error");
+      setErrorMessage("Please accept the waiver before submitting.");
       return;
     }
 
-    const formData = {
-      parentName,
-      parentEmail,
-      parentPhone,
-      childName,
-      childDob,
-      programId: selectedProgramId,
-      medicalInfo,
-      emergencyName,
-      emergencyPhone,
-      waiverAccepted,
-    };
+    setSubmitting(true);
 
-    // Log form data for now -- full API integration comes later
-    console.log("Registration form submitted:", formData);
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          parentName,
+          parentEmail,
+          parentPhone,
+          childName,
+          childDob,
+          programId: selectedProgramId,
+          medicalInfo,
+          emergencyName,
+          emergencyPhone,
+          waiverSigned: waiverAccepted,
+        }),
+      });
 
-    setStatus("success");
+      if (res.ok) {
+        setStatus("success");
+        setParentName("");
+        setParentEmail("");
+        setParentPhone("");
+        setChildName("");
+        setChildDob("");
+        setSelectedProgramId("");
+        setMedicalInfo("");
+        setEmergencyName("");
+        setEmergencyPhone("");
+        setWaiverAccepted(false);
+      } else {
+        const data = await res.json();
+        setStatus("error");
+        setErrorMessage(data.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setStatus("error");
+      setErrorMessage("An unexpected error occurred. Please try again later.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -112,7 +143,7 @@ export default function RegistrationForm({
             <div className="flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-red-800">
               <AlertCircle className="h-5 w-5 shrink-0" />
               <p className="text-sm">
-                Please fill out all required fields before submitting.
+                {errorMessage || "Please fill out all required fields before submitting."}
               </p>
             </div>
           )}
@@ -299,8 +330,8 @@ export default function RegistrationForm({
             </div>
           )}
 
-          <Button type="submit" size="xl" className="w-full">
-            Complete Registration
+          <Button type="submit" size="xl" className="w-full" disabled={submitting}>
+            {submitting ? "Submitting..." : "Complete Registration"}
           </Button>
         </form>
       </div>

@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,8 +7,30 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Download, Users } from "lucide-react";
+import { prisma } from "@/lib/db";
+import { getPrograms } from "@/lib/config";
 
-export default function AdminRegistrationsPage() {
+export default async function AdminRegistrationsPage() {
+  const registrations = await prisma.registration.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+
+  const programs = getPrograms();
+  const programMap = new Map(programs.map((p) => [p.id, p.name]));
+
+  function getStatusVariant(status: string) {
+    switch (status) {
+      case "confirmed":
+        return "default" as const;
+      case "pending":
+        return "secondary" as const;
+      case "cancelled":
+        return "outline" as const;
+      default:
+        return "secondary" as const;
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -55,22 +75,55 @@ export default function AdminRegistrationsPage() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td colSpan={5} className="py-12 text-center">
-                    <div className="flex flex-col items-center gap-3">
-                      <Users className="h-10 w-10 text-muted-foreground/50" />
-                      <div>
-                        <p className="font-medium text-muted-foreground">
-                          No registrations yet
-                        </p>
-                        <p className="text-xs text-muted-foreground/70 mt-1">
-                          Registrations will appear here once families sign up
-                          for programs.
-                        </p>
+                {registrations.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="py-12 text-center">
+                      <div className="flex flex-col items-center gap-3">
+                        <Users className="h-10 w-10 text-muted-foreground/50" />
+                        <div>
+                          <p className="font-medium text-muted-foreground">
+                            No registrations yet
+                          </p>
+                          <p className="text-xs text-muted-foreground/70 mt-1">
+                            Registrations will appear here once families sign up
+                            for programs.
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
+                    </td>
+                  </tr>
+                ) : (
+                  registrations.map((reg) => (
+                    <tr
+                      key={reg.id}
+                      className="border-b border-border last:border-0"
+                    >
+                      <td className="py-3 px-4 font-medium">
+                        {reg.childName}
+                      </td>
+                      <td className="py-3 px-4">
+                        <div>
+                          <p>{reg.parentName}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {reg.parentEmail}
+                          </p>
+                        </div>
+                      </td>
+                      <td className="py-3 px-4">
+                        {programMap.get(reg.programId) || reg.programId}
+                      </td>
+                      <td className="py-3 px-4">
+                        <Badge variant={getStatusVariant(reg.status)}>
+                          {reg.status.charAt(0).toUpperCase() +
+                            reg.status.slice(1)}
+                        </Badge>
+                      </td>
+                      <td className="py-3 px-4 text-muted-foreground">
+                        {new Date(reg.createdAt).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

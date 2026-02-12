@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,9 +5,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Mail, CheckCheck } from "lucide-react";
+import { prisma } from "@/lib/db";
 
-export default function AdminMessagesPage() {
+export default async function AdminMessagesPage() {
+  const messages = await prisma.contactSubmission.findMany({
+    orderBy: { createdAt: "desc" },
+  });
+
   return (
     <div className="space-y-6">
       <div>
@@ -21,25 +25,84 @@ export default function AdminMessagesPage() {
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-lg">All Messages</CardTitle>
-          <Button variant="outline" size="sm" className="gap-2" disabled>
+          <CardTitle className="text-lg">
+            All Messages{" "}
+            <span className="text-sm font-normal text-muted-foreground">
+              ({messages.length} {messages.length === 1 ? "message" : "messages"})
+            </span>
+          </CardTitle>
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-2"
+            disabled={messages.length === 0}
+          >
             <CheckCheck className="h-4 w-4" />
             Mark All Read
           </Button>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="flex flex-col items-center gap-3 py-8">
-              <Mail className="h-10 w-10 text-muted-foreground/50" />
-              <div className="text-center">
-                <p className="font-medium text-muted-foreground">
-                  No messages yet
-                </p>
-                <p className="text-xs text-muted-foreground/70 mt-1">
-                  Messages from your contact form will appear here.
-                </p>
+            {messages.length === 0 ? (
+              <div className="flex flex-col items-center gap-3 py-8">
+                <Mail className="h-10 w-10 text-muted-foreground/50" />
+                <div className="text-center">
+                  <p className="font-medium text-muted-foreground">
+                    No messages yet
+                  </p>
+                  <p className="text-xs text-muted-foreground/70 mt-1">
+                    Messages from your contact form will appear here.
+                  </p>
+                </div>
               </div>
-            </div>
+            ) : (
+              messages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className={`rounded-lg border p-4 ${
+                    !msg.read
+                      ? "border-primary/30 bg-primary/5"
+                      : "border-border"
+                  }`}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <p
+                          className={`text-sm ${
+                            !msg.read ? "font-bold" : "font-medium"
+                          }`}
+                        >
+                          {msg.name}
+                        </p>
+                        {!msg.read && (
+                          <Badge variant="secondary" className="text-xs">
+                            Unread
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        {msg.email}
+                      </p>
+                      <p
+                        className={`text-sm mt-2 ${
+                          !msg.read
+                            ? "text-foreground"
+                            : "text-muted-foreground"
+                        }`}
+                      >
+                        {msg.message.length > 200
+                          ? msg.message.slice(0, 200) + "..."
+                          : msg.message}
+                      </p>
+                    </div>
+                    <p className="text-xs text-muted-foreground ml-4 shrink-0">
+                      {new Date(msg.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </CardContent>
       </Card>

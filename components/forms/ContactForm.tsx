@@ -13,24 +13,46 @@ export default function ContactForm() {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setErrorMessage("");
 
     // Validate required fields
     if (!name.trim() || !email.trim() || !message.trim()) {
       setStatus("error");
+      setErrorMessage("Please fill out all required fields before submitting.");
       return;
     }
 
-    // Log form data for now -- full API integration comes later
-    console.log("Contact form submitted:", { name, email, phone, message });
+    setSubmitting(true);
 
-    setStatus("success");
-    setName("");
-    setEmail("");
-    setPhone("");
-    setMessage("");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone, message }),
+      });
+
+      if (res.ok) {
+        setStatus("success");
+        setName("");
+        setEmail("");
+        setPhone("");
+        setMessage("");
+      } else {
+        const data = await res.json();
+        setStatus("error");
+        setErrorMessage(data.error || "Something went wrong. Please try again.");
+      }
+    } catch {
+      setStatus("error");
+      setErrorMessage("An unexpected error occurred. Please try again later.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -48,7 +70,7 @@ export default function ContactForm() {
         <div className="flex items-center gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-red-800">
           <AlertCircle className="h-5 w-5 shrink-0" />
           <p className="text-sm">
-            Please fill out all required fields before submitting.
+            {errorMessage || "Please fill out all required fields before submitting."}
           </p>
         </div>
       )}
@@ -106,8 +128,8 @@ export default function ContactForm() {
         />
       </div>
 
-      <Button type="submit" size="lg" className="w-full">
-        Send Message
+      <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+        {submitting ? "Submitting..." : "Send Message"}
       </Button>
     </form>
   );
